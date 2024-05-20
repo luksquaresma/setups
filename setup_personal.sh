@@ -97,18 +97,18 @@ sudo -v; echo;
 
 # clear path to enviroment setup
 {
-#     echo; echo; echo "....Path Preparations...."
-#     {
-#         tree_cleaning $path_obsidian
-#     } && {
-#         tree_cleaning $path_projects
-#     } 
-# } && {
+    echo; echo; echo "....Path Preparations...."
+    {
+        tree_cleaning $path_obsidian
+    } && {
+        tree_cleaning $path_projects
+    } 
+} && {
     echo; echo; echo "....APT Packages...."
     {
-        echo; sudo apt update
+        echo; sudo apt update -y
     } && {
-        echo; sudo apt upgrade
+        echo; sudo apt upgrade -y
     } && {
         for p in "${pkgs_apt[@]}"
         do
@@ -128,8 +128,10 @@ sudo -v; echo;
 } && {
     echo; echo; echo "....GIT Configs...."
     {
+        git config --global user.name $git_name
         sudo git config --global user.name $git_name
     } && {
+        git config --global user.email $git_email
         sudo git config --global user.email $git_email
     } && {
         sudo git config --global credential.helper cache
@@ -158,5 +160,3 @@ sudo -v; echo;
 } && {
     echo; echo; echo "........Everithing finished well. Bye Bye........"
 }
-
-
