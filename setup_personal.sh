@@ -10,6 +10,8 @@ git_email="lucas.quaresma1@gmail.com"
 
 pkgs_apt=(
     "git"
+    "chrome-gnome-shell"
+    "dconf-editor"
     "docker.io"
 )
 
