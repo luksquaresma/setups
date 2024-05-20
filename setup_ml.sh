@@ -1,18 +1,22 @@
 #!/bin/bash
 
 # ---------------------------------
+# NOTICE
+# This is only tested and working with ubuntu 24.04 # Please be carefull!
+# The usage is simple: indicate below a directory to contain your virtual 
+# enviroment (env_folder) and  the enviroment name (env_name).
+# The installer will create or clean these locations, so please be carefull.
+# The expected test output at the end is something like:
+#         [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+# ---------------------------------
+
+
+# ---------------------------------
 # CONFIGS
 env_folder="envs"
 env_name="env_ml"
 env_dir=$env_folder/$env_name
-# env_dir="a/bb/ccc/dddd/eeeee/"
-# tests:
-#   "123/456/789/000"
-#   "123/456/789/000/"
-#   "/123/456/789/000"
-#   "/123/456/789/000/"
 # ---------------------------------
-
 
 
 # ---------------------------------
@@ -64,17 +68,20 @@ tree_cleaning() {
 # Config preparation
 env_dir=$(tree_path_prep $env_dir)
 
+
 # CLI Start
 echo "........MACHINE LEARNING ENVIROMENT SETUP........"
 echo; echo "Directory for virtual enviroment on '$HOME/$env_dir'"
 echo; read -p "Do you confirm? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
 sudo -v; echo;
-# cd $HOME
+cd $HOME
 
 
-# clear path to enviroment setup
+# Path to enviroment setup
 tree_cleaning $env_dir
 
+
+# Instalation itselv
 {
     echo; echo; echo "....Basic Installs...."
     {
@@ -83,56 +90,39 @@ tree_cleaning $env_dir
         echo; sudo apt install locate -y
     } && {
         echo; sudo apt install python3-pip -y
-    } && {
-        echo; sudo apt install nvidia-driver -y
+    # } && {
+    #     echo; sudo apt install nvidia-driver -y
     } && {
         echo; sudo apt install nvidia-cudnn -y
     } && {
         echo; sudo apt install nvidia-cuda-toolkit -y
-    # } && {
-        # echo; pip3 uninstall nvidia-tensorrt --break-system-packages
-    # } && {
-        # echo; pip3 install --upgrade nvidia-tensorrt --break-system-packages -y
     } && {
-        echo; pip3 uninstall tensorflow --break-system-packages -y
-    # } && {
-        echo; pip3 install --upgrade tensorflow[and-cuda] --break-system-packages
-    # } && {
-    #     echo; export NVIDIA_DIR=$(dirname $(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)")))
-    # } && {
-    #     echo; export LD_LIBRARY_PATH=$(echo ${NVIDIA_DIR}/*/lib/ | sed -r 's/\s+/:/g')${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+        echo; pip3 install --upgrade wheel --break-system-packages
     }
-
-
-# } && {
-#     {
-#         echo; echo; echo "....Enviroment Install...."
-#     } && {
-#         echo; sudo apt install python3-venv -y
-#     } && {
-#         echo; python3 -m venv $HOME/$env_dir
-#     } && {
-#         source $HOME/$env_dir/bin/activate
-#     }
-# } && {
-#     {
-#         echo; echo; echo "....Installing Pip Packages...."
-#     } && {
-#         echo; pip3 install --upgrade pip --break-system-packages
-#     } && {
-#         echo; pip3 install --upgrade wheel --break-system-packages
-#     } && {
-#         echo; pip3 install --upgrade nvidia-tensorrt --break-system-packages
-#     } && {
-#         echo; pip3 uninstall tensorflow --break-system-packages
-#     } && {
-#         echo; pip3 install --upgrade tensorflow[and-cuda]==2.14 --break-system-packages
-#         # echo; pip3 install --upgrade tensorflow[and-cuda] --break-system-packages
-#     # } && {
-#         # echo; pip3 install --upgrade tensorrt_lean --break-system-packages
-#     # } && {
-#         # echo; pip3 install --upgrade tensorrt_dispatch --break-system-packages
-#     }
+} && {
+    {
+        echo; echo; echo "....Enviroment Install...."
+    } && {
+        echo; sudo apt install python3-venv -y
+    } && {
+        echo; python3 -m venv $HOME/$env_dir
+    } && {
+        source $HOME/$env_dir/bin/activate
+    }
+} && {
+    {
+        echo; echo; echo "....Installing Pip Packages...."
+    } && {
+        echo; pip3 install --upgrade pip --break-system-packages
+    } && {
+        echo; pip3 install --upgrade wheel --break-system-packages
+    } && {
+        echo; pip3 install --upgrade nvidia-tensorrt --break-system-packages
+    } && {
+        echo; pip3 uninstall tensorflow --break-system-packages
+    } && {
+        echo; pip3 install --upgrade tensorflow[and-cuda] --break-system-packages
+    }
 } && {
     {
         echo; echo; echo "....Testing...."
