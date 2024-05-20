@@ -16,6 +16,9 @@ pkgs_snap=(
     "obsidian --classic"
     "code --classic"
     "teams-for-linux"
+    "spotify"
+    "docker"
+    "docker.io"
 )
 
 # gnome_extensions=(
@@ -134,6 +137,33 @@ sudo -v; echo;
         # one year credential validity
         git config --global credential.helper 'cache --timeout=31536000'
     }
+} && {
+    {
+        echo; sudo groupadd docker
+    } && {
+        echo; sudo usermod -aG docker $USER
+    } &&{
+        echo; su - $USER
+    } && {
+        echo; export PATH="$PATH:/usr/bin/docker"
+    } && {
+        echo; source ~/.bashrc
+    } && {
+        echo; docker --version
+    } && {
+        echo; sudo systemctl daemon-reload
+    } && {
+        echo; sudo systemctl restart docker
+    }
+}
+
+
+
+
+
+
+
+
 } && {
     echo; echo; echo "........Everithing finished well. Bye Bye........"
 }
