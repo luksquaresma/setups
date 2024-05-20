@@ -10,6 +10,7 @@ git_email="lucas.quaresma1@gmail.com"
 
 pkgs_apt=(
     "git"
+    "docker.io"
 )
 
 pkgs_snap=(
@@ -18,7 +19,6 @@ pkgs_snap=(
     "teams-for-linux"
     "spotify"
     "docker"
-    "docker.io"
 )
 
 # gnome_extensions=(
@@ -97,13 +97,13 @@ sudo -v; echo;
 
 # clear path to enviroment setup
 {
-    echo; echo; echo "....Path Preparations...."
-    {
-        tree_cleaning $path_obsidian
-    } && {
-        tree_cleaning $path_projects
-    } 
-} && {
+#     echo; echo; echo "....Path Preparations...."
+#     {
+#         tree_cleaning $path_obsidian
+#     } && {
+#         tree_cleaning $path_projects
+#     } 
+# } && {
     echo; echo; echo "....APT Packages...."
     {
         echo; sudo apt update
@@ -155,15 +155,6 @@ sudo -v; echo;
     } && {
         echo; sudo systemctl restart docker
     }
-}
-
-
-
-
-
-
-
-
 } && {
     echo; echo; echo "........Everithing finished well. Bye Bye........"
 }
