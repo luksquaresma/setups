@@ -13,6 +13,8 @@ pkgs_apt=(
     "chrome-gnome-shell"
     "dconf-editor"
     "docker.io"
+    "curl"
+    "rustup"
 )
 
 pkgs_snap=(
@@ -142,11 +144,12 @@ sudo -v; echo;
         git config --global credential.helper 'cache --timeout=31536000'
     }
 } && {
+    echo; echo; echo "....Docker Configs...."
     {
         echo; sudo groupadd docker
     } && {
         echo; sudo usermod -aG docker $USER
-    } &&{
+    } && {
         echo; su - $USER
     } && {
         echo; export PATH="$PATH:/usr/bin/docker"
@@ -158,6 +161,18 @@ sudo -v; echo;
         echo; sudo systemctl daemon-reload
     } && {
         echo; sudo systemctl restart docker
+    }
+} && {
+    echo; echo; echo "....Rust Configs...."
+    {
+        echo; exec $SHELL
+    } && {
+        echo; sudo rustup default stable
+    } && {
+        echo; sudo rustup update
+    } && {
+        echo "Testing: "
+        rustup check
     }
 } && {
     echo; echo; echo "........Everithing finished well. Bye Bye........"
