@@ -56,15 +56,15 @@ tree_path_prep() {
 tree_cleaning() {
     base=$2 # should allways have trainling "/"
     prefix="${1%%/*}"
-    sulfix="${1##*$prefix}"
-    sulfix="${sulfix:1:${#sulfix}}"
+    suffix="${1##*$prefix}"
+    suffix="${suffix:1:${#suffix}}"
 
-    if [ -d "$HOME/$base$prefix/$sulfix" ]; then # Check if the directory exists
+    if [ -d "$HOME/$base$prefix/$suffix" ]; then # Check if the directory exists
         {
-            echo "Directory $HOME/$base$prefix/$sulfix exists"
-            sudo rm -rf $HOME/$base$prefix/$sulfix/* # Remove all contents of the directory
+            echo "Directory $HOME/$base$prefix/$suffix exists"
+            sudo rm -rf $HOME/$base$prefix/$suffix/* # Remove all contents of the directory
         } && {
-            echo "Removed content of directory $HOME/$base$prefix/$sulfix"
+            echo "Removed content of directory $HOME/$base$prefix/$suffix"
             return
         }
     elif [ -d "$HOME/$base$prefix" ]; then # Check if the directory exists
@@ -81,7 +81,7 @@ tree_cleaning() {
             echo "Created directory $HOME/$base$prefix"
         }
     fi
-    tree_cleaning $sulfix "$base$prefix/"
+    tree_cleaning $suffix "$base$prefix/"
 }
 # ---------------------------------
 
