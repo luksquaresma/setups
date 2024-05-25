@@ -118,7 +118,9 @@ sudo -v; echo;
     } && {
         for p in "${pkgs_apt[@]}"
         do
-            echo; sudo apt install $p -y
+            if [ $? -eq 0 ]; then
+                echo; sudo apt install $p -y
+            fi
         done            
     } 
 } && {
@@ -128,8 +130,12 @@ sudo -v; echo;
     } && {
         for p in "${pkgs_snap[@]}"
         do
-            echo; sudo snap install $p
+            if [ $? -eq 0 ]; then
+                echo; sudo snap install $p
+            fi
         done       
+    } && {
+        sudo service snapd restart
     } 
 } && {
     echo; echo; echo "....GIT Configs...."
