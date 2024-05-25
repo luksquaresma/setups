@@ -11,6 +11,7 @@ git_email="lucas.quaresma1@gmail.com"
 pkgs_apt=(
     "git"
     "chrome-gnome-shell"
+    "gnome-tweaks"
     "dconf-editor"
     "docker.io"
     "curl"
