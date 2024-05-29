@@ -8,6 +8,10 @@ path_projects="Projects"
 git_name="Lucas Quaresma"
 git_email="lucas.quaresma1@gmail.com"
 
+distro="ubuntu" #debian
+distro_codename="noble" #noble = ubuntu 24.04
+
+
 pkgs_apt=(
     "git"
     "chrome-gnome-shell"
@@ -181,6 +185,17 @@ sudo -v; echo;
     } && {
         echo "Testing: "
         rustup check
+    }
+} && {
+    echo; echo; echo "....Insync Install and Configs...."
+    {
+        echo; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ACCAF35C
+    } && {
+        echo; sudo add-apt-repository "deb http://apt.insync.io/$distro $distro_codename non-free contrib"
+    } && {
+        echo; sudo apt-get update
+    } && {
+        echo; sudo apt install insync
     }
 } && {
     echo; echo; echo "........Everithing finished well. Bye Bye........"
