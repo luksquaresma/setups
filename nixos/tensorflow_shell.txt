@@ -1,0 +1,4 @@
+nix-shell --arg config '{ cudaSupport = true; allowUnfree = true; }' -p 'python3.withPackages (ps: [ ps.tensorflow ])'
+
+
+
