@@ -106,43 +106,43 @@ sudo -v; echo;
 
 
 # clear path to enviroment setup
-{
-    echo; echo; echo "....Path Preparations...."
-    {
-        tree_cleaning $path_obsidian
-    } && {
-        tree_cleaning $path_projects
-    } 
-} && {
-    echo; echo; echo "....APT Packages...."
-    {
-        echo; sudo apt update -y
-    } && {
-        echo; sudo apt upgrade -y
-    } && {
-        for p in "${pkgs_apt[@]}"
-        do
-            if [ $? -eq 0 ]; then
-                echo; sudo apt install $p -y
-            fi
-        done            
-    } 
-} && {
-    echo; echo; echo "....Snap Packages...."
-    {
-        echo; sudo snap refresh
-    } && {
-        for p in "${pkgs_snap[@]}"
-        do
-            if [ $? -eq 0 ]; then
-                echo; sudo snap install $p
-            fi
-        done       
-    } && {
-        sudo service snapd restart
-    } 
-} && {
-    echo; echo; echo "....GIT Configs...."
+# {
+#     echo; echo; echo "....Path Preparations...."
+#     {
+#         tree_cleaning $path_obsidian
+#     } && {
+#         tree_cleaning $path_projects
+#     } 
+# } && {
+#     echo; echo; echo "....APT Packages...."
+#     {
+#         echo; sudo apt update -y
+#     } && {
+#         echo; sudo apt upgrade -y
+#     } && {
+#         for p in "${pkgs_apt[@]}"
+#         do
+#             if [ $? -eq 0 ]; then
+#                 echo; sudo apt install $p -y
+#             fi
+#         done            
+#     } 
+# } && {
+#     echo; echo; echo "....Snap Packages...."
+#     {
+#         echo; sudo snap refresh
+#     } && {
+#         for p in "${pkgs_snap[@]}"
+#         do
+#             if [ $? -eq 0 ]; then
+#                 echo; sudo snap install $p
+#             fi
+#         done       
+#     } && {
+#         sudo service snapd restart
+#     } 
+# } && {
+{    echo; echo; echo "....GIT Configs...."
     {
         git config --global user.name $git_name
         sudo git config --global user.name $git_name
@@ -186,17 +186,17 @@ sudo -v; echo;
         echo "Testing: "
         rustup check
     }
-} && {
-    echo; echo; echo "....Insync Install and Configs...."
-    {
-        echo; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ACCAF35C
-    } && {
-        echo; sudo add-apt-repository "deb http://apt.insync.io/$distro $distro_codename non-free contrib"
-    } && {
-        echo; sudo apt-get update
-    } && {
-        echo; sudo apt install insync
-    }
+# } && {
+#     echo; echo; echo "....Insync Install and Configs...."
+#     {
+#         echo; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ACCAF35C
+#     } && {
+#         echo; sudo add-apt-repository "deb http://apt.insync.io/$distro $distro_codename non-free contrib"
+#     } && {
+#         echo; sudo apt-get update
+#     } && {
+#         echo; sudo apt install insync
+#     }
 } && {
     echo; echo; echo "........Everithing finished well. Bye Bye........"
 }

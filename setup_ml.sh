@@ -64,7 +64,7 @@ tree_cleaning() {
 # ---------------------------------
 
 
-# ---------------------------------
+# # ---------------------------------
 # Config preparation
 env_dir=$(tree_path_prep $env_dir)
 
@@ -83,27 +83,27 @@ tree_cleaning $env_dir
 
 # Instalation itselv
 {
-    echo; echo; echo "....Basic Installs...."
-    {
-         echo; sudo apt update -y
-    } && {
-        echo; sudo apt install locate -y
-    } && {
-        echo; sudo apt install python3-pip -y
-    # } && {
-    #     echo; sudo apt install nvidia-driver -y
-    } && {
-        echo; sudo apt install nvidia-cudnn -y
-    } && {
-        echo; sudo apt install nvidia-cuda-toolkit -y
-    } && {
-        echo; pip3 install --upgrade wheel --break-system-packages
-    }
-} && {
+#     echo; echo; echo "....Basic Installs...."
+#     {
+#          echo; sudo apt update -y
+#     } && {
+#         echo; sudo apt install locate -y
+#     } && {
+#         echo; sudo apt install python3-pip -y
+#     # } && {
+#     #     echo; sudo apt install nvidia-driver -y
+#     } && {
+#         echo; sudo apt install nvidia-cudnn -y
+#     } && {
+#         echo; sudo apt install nvidia-cuda-toolkit -y
+#     } && {
+#         echo; pip3 install --upgrade wheel --break-system-packages
+#     }
+# } && {
     {
         echo; echo; echo "....Enviroment Install...."
-    } && {
-        echo; sudo apt install python3-venv -y
+    # } && {
+        # echo; sudo apt install python3-venv -y
     } && {
         echo; python3 -m venv $HOME/$env_dir
     } && {
@@ -114,7 +114,7 @@ tree_cleaning $env_dir
         echo; echo; echo "....Installing Pip Packages...."
     } && {
         echo; pip3 install --upgrade pip --break-system-packages
-    } && {
+    # } && {
         echo; pip3 install --upgrade wheel --break-system-packages
     } && {
         echo; pip3 install --upgrade nvidia-tensorrt --break-system-packages
