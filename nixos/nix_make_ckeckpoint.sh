@@ -123,7 +123,7 @@ sudo -v;
     }
 } && {
     if read -p "Do you really wish to proceed with git sync? (y/N): " && (fok $REPLY); then
-        sudo git add nixos/tmp/\*.nix && sudo git commit -m "$commit_msg" && sudo git pull && sudo git push
+        sudo git add tmp/\*.nix && sudo git commit -m "$commit_msg" && sudo git pull && sudo git push
     else
         echo "ABORT - Last second!"; exit 1
     fi
