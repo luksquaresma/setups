@@ -2,7 +2,10 @@
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 path_checkpoint="$SCRIPTPATH/nix_make_ckeckpoint.sh"
 
+echo "......NIXOS CONFIG-REBUILD-REBOOT SCRIPT......";
+
 sudo -v; cd $SCRIPTPATH; echo;
+
 fok() {
     p=$1
     if [[ "$p" =~ ^([yY][eE][sS]|[yY])$ ]]; then
