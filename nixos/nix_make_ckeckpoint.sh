@@ -94,7 +94,7 @@ sudo -v;
     {
         echo; echo; echo "...Temporary files..."
         echo ">>>>File path $path_temp..."
-        sudo mkdir -m 777 -p ./nixos/tmp
+        sudo mkdir -m 777 -p ./tmp
     } && {
         if $ok_config; then
             sudo cp $path_config $path_temp; echo "OK - config.nix";
