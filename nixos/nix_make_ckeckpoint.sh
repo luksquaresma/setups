@@ -91,7 +91,7 @@ sudo -v;
     fi
 } && {
     {
-        echo; echo; echo "...Ttemporary files..."
+        echo; echo; echo "...Temporary files..."
         echo ">>>>File path $path_temp..."
         sudo mkdir -m 777 -p ./nixos/tmp
     } && {

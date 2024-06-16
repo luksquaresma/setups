@@ -1,4 +1,6 @@
 #!/bin/bash
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+path_checkpoint="$SCRIPTPATH/nix_make_ckeckpoint.sh"
 
 sudo -v; echo;
 fok() {
@@ -13,12 +15,16 @@ fok() {
 
 clear;
 {
-    sudo nano /etc/nixos/configuration.nix
+    echo; sudo nano /etc/nixos/configuration.nix; echo;
 } && {
     if read -p "Do you wish to rebuild on boot? (y/N): " && (fok $REPLY); then
-        sudo nixos-rebuild boot
+        echo; sudo nixos-rebuild boot; echo;
     fi
-} &&{
+} && {
+    if read -p "Do you wish to start checkpoint script? (y/N): " && (fok $REPLY); then
+        echo; bash $path_checkpoint; echo;
+    fi
+} && {
     if read -p "Do you wish to restart now? (y/N): " && (fok $REPLY); then
         shutdown -r 0
     fi
