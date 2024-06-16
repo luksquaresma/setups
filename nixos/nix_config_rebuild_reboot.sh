@@ -15,11 +15,11 @@ clear;
 {
     sudo nano /etc/nixos/configuration.nix
 } && {
-    if read -p "Do you wish to rebuild on boot? (y/N): " && ! (fok $REPLY); then
+    if read -p "Do you wish to rebuild on boot? (y/N): " && (fok $REPLY); then
         sudo nixos-rebuild boot
     fi
 } &&{
-    if read -p "Do you wish to restart now? (y/N): " && ! (fok $REPLY); then
+    if read -p "Do you wish to restart now? (y/N): " && (fok $REPLY); then
         shutdown -r 0
     fi
 }
