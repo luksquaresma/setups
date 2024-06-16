@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# echo; read -p "Do you confirm? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+cd $SCRIPTPATH;
 
 path_config="/etc/nixos/configuration.nix"
 path_shell="$HOME/shell.nix"
-path_temp="./nixos/tmp/"
+path_temp="./tmp/"
 ok_config=false
 ok_shell=false
 ok_git=false
