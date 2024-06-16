@@ -28,7 +28,7 @@ f_custom_commit() {
     if read -p "Do you wish a custom commit message? (y/N): " && (fok $REPLY); then
         echo; read -p "Type your commit message: " commit_msg
     fi
-    echo; echo "Commit message:"; echo $commit_msg; echo;
+    echo; echo "    Commit message:"; echo "        $commit_msg"; echo;
     if read -p "Do you confirm the above commit message? (y/N): " && ! (fok $REPLY); then
         if read -p "Do you retry? (y/N): " && (fok $REPLY); then
             f_custom_commit;
@@ -122,7 +122,7 @@ sudo -v;
     }
 } && {
     if read -p "Do you really wish to proceed with git sync? (y/N): " && (fok $REPLY); then
-        git add nixos/tmp/\*.nix && git commit -m "$commit_msg" && git pull && git push
+        sudo git add nixos/tmp/\*.nix && sudo git commit -m "$commit_msg" && sudo git pull && sudo git push
     else
         echo "ABORT - Last second!"; exit 1
     fi
