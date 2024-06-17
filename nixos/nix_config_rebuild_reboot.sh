@@ -2,6 +2,7 @@
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 path_checkpoint="$SCRIPTPATH/nix_make_ckeckpoint.sh"
 
+clear;
 echo "......NIXOS CONFIG-REBUILD-REBOOT SCRIPT......";
 
 sudo -v; cd $SCRIPTPATH; echo;
@@ -16,7 +17,6 @@ fok() {
     $p
 }
 
-clear;
 {
     echo; sudo nano /etc/nixos/configuration.nix; echo;
 } && {
