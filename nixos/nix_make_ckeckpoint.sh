@@ -13,6 +13,7 @@ ok_custom_commit=false
 ok_commit=false
 ok_sync=false
 commit_msg="Manual NixOS configuration sync via Bash"
+commit_usr="luks"
 
 
 fok() {
@@ -123,7 +124,7 @@ sudo -v;
     }
 } && {
     if read -p "Do you really wish to proceed with git sync? (y/N): " && (fok $REPLY); then
-        git add tmp/\*.nix && git commit -m "$commit_msg" && git pull && git push
+        sudo -H -u $commit_usr; git add tmp/\*.nix && git commit -m "$commit_msg" && git pull && git push
     else
         echo "ABORT - Last second!"; exit 1
     fi
