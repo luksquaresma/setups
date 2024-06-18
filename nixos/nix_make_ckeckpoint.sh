@@ -111,6 +111,7 @@ sudo -v;
         git_email=$(git config user.email)
         git_remote_origin_url=$(git config remote.origin.url)
     } && {
+        sudo -H -u $commit_usr;
         echo "USER:               '$git_name'";
         echo "EMAIL:              '$git_email'";
         echo "REMOTE ORIGIN URL:  '$git_remote_origin_url'";
@@ -124,7 +125,7 @@ sudo -v;
     }
 } && {
     if read -p "Do you really wish to proceed with git sync? (y/N): " && (fok $REPLY); then
-        sudo -H -u $commit_usr; git add tmp/\*.nix && git commit -m "$commit_msg" && git pull && git push
+        git add tmp/\*.nix && git commit -m "$commit_msg" && git pull && git push
     else
         echo "ABORT - Last second!"; exit 1
     fi
