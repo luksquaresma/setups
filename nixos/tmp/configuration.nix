@@ -138,6 +138,7 @@
     docker
     gcc
     git
+    glow
     glmark2
     gnome.dconf-editor
     gnome.gnome-tweaks
@@ -147,9 +148,11 @@
     linuxHeaders
     lshw
     obsidian
+    remmina
     rustup
     spotify
     sqlite
+    tmux
     vscode
 
     # Nvidia
