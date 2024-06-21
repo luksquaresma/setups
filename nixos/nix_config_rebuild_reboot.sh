@@ -18,10 +18,17 @@ fok() {
 }
 
 {
-    echo; sudo nano /etc/nixos/configuration.nix; echo;
+    echo;
+    echo "...Nix config edit...";
+    sudo nano /etc/nixos/configuration.nix && echo
+} && {
+    echo
+    echo "...Nix channel update..."
+    sudo nix-channel --update && echo
 } && {
     if read -p "Do you wish to rebuild on boot? (y/N): " && (fok $REPLY); then
-        echo; sudo nixos-rebuild boot; echo;
+        echo;
+        sudo nixos-rebuild boot && echo
     fi
 } && {
     if read -p "Do you wish to start checkpoint script? (y/N): " && (fok $REPLY); then
