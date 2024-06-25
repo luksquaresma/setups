@@ -25,6 +25,7 @@ fok() {
     echo
     echo "...Nix cache setup..."
     sudo cachix use cuda-maintainers && echo
+    sudo cachix use luksquaresma && echo
 } && {
     echo
     echo "...Nix channel update..."
