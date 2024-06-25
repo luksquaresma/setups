@@ -39,6 +39,11 @@ fok() {
         sudo nixos-rebuild boot && echo
     fi
 } && {
+    if read -p "Do you wish to push the current cache? (y/N): " && (fok $REPLY); then
+        echo;
+        sudo cachix push luksquaresma && echo
+    fi
+} && {
     if read -p "Do you wish to start checkpoint script? (y/N): " && (fok $REPLY); then
         echo; bash $path_checkpoint; echo;
     fi
