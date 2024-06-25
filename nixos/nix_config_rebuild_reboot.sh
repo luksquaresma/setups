@@ -23,6 +23,10 @@ fok() {
     sudo nix-collect-garbage && echo
 } && {
     echo
+    echo "...Nix cache setup..."
+    sudo cachix use cuda-maintainers && echo
+} && {
+    echo
     echo "...Nix channel update..."
     sudo nix-channel --update && echo
 } && {
