@@ -42,7 +42,7 @@ fok() {
 } && {
     if read -p "Do you wish to push the current cache? (y/N): " && (fok $REPLY); then
         echo;
-        sudo cachix push luksquaresma && echo
+        sudo nix-build | cachix push luksquaresma && echo
     fi
 } && {
     if read -p "Do you wish to start checkpoint script? (y/N): " && (fok $REPLY); then
