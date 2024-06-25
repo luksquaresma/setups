@@ -168,7 +168,7 @@
     python311Packages.numpy
     python311Packages.setuptools
     # python311Packages.tensorflow
-    python311Packages.tensorflowWithCuda
+    # python311Packages.tensorflowWithCuda
     # python311Packages.tensorrt
   ];
 
@@ -247,11 +247,11 @@
   hardware.nvidia.prime = {
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";
-    # sync.enable = true;
-    offload = {
-      enable = true;
-      enableOffloadCmd = true;
-    };
+    sync.enable = true;
+    # offload = {
+    #   enable = true;
+    #   enableOffloadCmd = true;
+    # };
   };
 
   # ===== GARBAGE COLLECTOR
