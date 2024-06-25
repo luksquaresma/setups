@@ -136,7 +136,7 @@
     curl
     discord
     docker
-    gcc
+    # gcc
     git
     glow
     glmark2
