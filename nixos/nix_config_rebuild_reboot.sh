@@ -18,13 +18,17 @@ fok() {
 }
 
 {
-    echo;
-    echo "...Nix config edit...";
-    sudo nano /etc/nixos/configuration.nix && echo
+    echo
+    echo "...Nix garbage collection..."
+    sudo nix-collect-garbage && echo
 } && {
     echo
     echo "...Nix channel update..."
     sudo nix-channel --update && echo
+} && {
+    echo;
+    echo "...Nix config edit...";
+    sudo nano /etc/nixos/configuration.nix && echo
 } && {
     if read -p "Do you wish to rebuild on boot? (y/N): " && (fok $REPLY); then
         echo;
