@@ -64,6 +64,8 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  hardware.enableRedistributableFirmware = true;
+
   # Enable sound with pipewire.
   hardware.bluetooth = {
     enable = true; # enables support for Bluetooth
@@ -136,7 +138,7 @@
     curl
     discord
     docker
-    # gcc
+    gcc
     git
     glow
     glmark2
@@ -156,20 +158,20 @@
     vscode
 
     # Nvidia
-    cudaPackages.cudnn
-    cudaPackages.cudatoolkit
-    cudaPackages.cuda_cudart
+    # cudaPackages.cudnn
+    # cudaPackages.cudatoolkit
+    # cudaPackages.cuda_cudart
     # cudaPackages.tensorrt
 
     # ML
-    python311Full
-    python311Packages.pip
-    python311Packages.wheel
-    python311Packages.numpy
-    python311Packages.setuptools
-    # python311Packages.tensorflow
-    # python311Packages.tensorflowWithCuda
-    # python311Packages.tensorrt
+     python311Full
+     python311Packages.pip
+     python311Packages.wheel
+     python311Packages.numpy
+     python311Packages.setuptools
+     # python311Packages.tensorflow
+     python311Packages.tensorflowWithCuda
+     # python311Packages.tensorrt
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
