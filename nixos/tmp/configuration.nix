@@ -158,6 +158,14 @@
     tmux
     vscode
 
+    # Python
+    python311Full
+    python311Packages.pip
+    python311Packages.wheel
+    python311Packages.numpy
+    python311Packages.setuptools
+    python311Packages.jupyter
+
     # Nvidia
     cudaPackages.cudnn
     cudaPackages.cudatoolkit
@@ -165,14 +173,9 @@
     # cudaPackages.tensorrt
 
     # ML
-     python311Full
-     python311Packages.pip
-     python311Packages.wheel
-     python311Packages.numpy
-     python311Packages.setuptools
-     python311Packages.tensorflow
-     python311Packages.tensorflowWithCuda
-     # python311Packages.tensorrt
+    python311Packages.tensorflow
+    python311Packages.tensorflowWithCuda
+    # python311Packages.tensorrt
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
