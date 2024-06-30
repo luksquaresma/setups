@@ -71,6 +71,7 @@
     enable = true; # enables support for Bluetooth
     powerOnBoot = true; # powers up the default Bluetooth controller on boot
   };
+  services.blueman.enable = true;
 
   hardware.pulseaudio = {
     enable = false;
@@ -158,9 +159,9 @@
     vscode
 
     # Nvidia
-    # cudaPackages.cudnn
-    # cudaPackages.cudatoolkit
-    # cudaPackages.cuda_cudart
+    cudaPackages.cudnn
+    cudaPackages.cudatoolkit
+    cudaPackages.cuda_cudart
     # cudaPackages.tensorrt
 
     # ML
@@ -169,7 +170,7 @@
      python311Packages.wheel
      python311Packages.numpy
      python311Packages.setuptools
-     # python311Packages.tensorflow
+     python311Packages.tensorflow
      python311Packages.tensorflowWithCuda
      # python311Packages.tensorrt
   ];
@@ -249,11 +250,11 @@
   hardware.nvidia.prime = {
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";
-    sync.enable = true;
-    # offload = {
-    #   enable = true;
-    #   enableOffloadCmd = true;
-    # };
+    # sync.enable = true;
+    offload = {
+      enable = true;
+      enableOffloadCmd = true;
+    };
   };
 
   # ===== GARBAGE COLLECTOR
