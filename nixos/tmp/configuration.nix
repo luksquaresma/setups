@@ -174,7 +174,7 @@
 
     # ML
     python311Packages.tensorflow
-    python311Packages.tensorflowWithCuda
+    # python311Packages.tensorflowWithCuda
     # python311Packages.tensorrt
   ];
 

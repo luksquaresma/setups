@@ -2,58 +2,53 @@
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 path_checkpoint="$SCRIPTPATH/nix_make_ckeckpoint.sh"
 
+source $SCRIPTPATH/../utils.sh
+cuda_cachix="cuda-maintainers"
+self_cachix="luksquaresma"
+
+
+
+
 clear
 echo "......NIXOS CONFIG-REBUILD-REBOOT SCRIPT......";
 
-sudo -v && cd $SCRIPTPATH && echo
-
-fok() {
-    p=$1
-    if [[ "$p" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        p=true
-    else
-        p=false
-    fi
-    $p
-}
+sudo -v && cd $SCRIPTPATH
 
 {
-    if read -p "Do you wish to perform garbage collection? (y/N): " && (fok $REPLY); then
-        echo
-        echo "...Nix garbage collection..."
+    echo; if (fok "Do you wish to perform garbage collection?"); then
+        echo; echo "...Nix garbage collection..."
         sudo nix-collect-garbage && echo
     fi
 } && {
     echo
-    if read -p "Do you wish to use cache via cachix? (y/N): " && (fok $REPLY); then
-        echo;
-        echo "...Nix cache setup..."
-        sudo cachix use luksquaresma && echo
+    echo; if (fok "Do you wish to use cache via cachix?"); then
+        echo; echo "...Nix cache setup..."
+        echo; if (fok "Do you wish to use $cuda_cachix instead of $self_cachix cachix?"); then
+            sudo cachix use $cuda_cachix && echo
+        else
+            sudo cachix use $self_cachix && echo
+        fi
     fi
 } && {
-    echo
-    echo "...Nix channel update..."
+    echo; echo "...Nix channel update..."
     sudo nix-channel --update && echo
 } && {
-    echo
-    echo "...Nix config edit..."
+    echo; echo "...Nix config edit..."
     sudo nano /etc/nixos/configuration.nix && echo
 } && {
-    if read -p "Do you wish to rebuild on boot? (y/N): " && (fok $REPLY); then
-        echo
-        sudo nixos-rebuild boot && echo
+    echo; if (fok "Do you wish to rebuild on boot?"); then
+        echo; sudo nixos-rebuild boot && echo
     fi
 } && {
-    if read -p "Do you wish to push the current cache? (y/N): " && (fok $REPLY); then
-        echo;
-        sudo cachix push luksquaresma * && echo
+    echo; if (fok "Do you wish to push the current cache?"); then
+        echo; sudo cachix push luksquaresma * && echo
     fi
 } && {
-    if read -p "Do you wish to start checkpoint script? (y/N): " && (fok $REPLY); then
-        echo && bash $path_checkpoint && echo
+    echo; if (fok "Do you wish to start checkpoint script?"); then
+        echo; bash $path_checkpoint && echo
     fi
 } && {
-    if read -p "Do you wish to restart now? (y/N): " && (fok $REPLY); then
+    echo; if (fok "Do you wish to restart now?"); then
         shutdown -r 0
     fi
 }
