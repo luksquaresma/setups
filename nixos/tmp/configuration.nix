@@ -147,6 +147,7 @@
     gnome.gnome-tweaks
     htop
     insync
+    jump
     libsecret
     linuxHeaders
     lshw
@@ -170,11 +171,11 @@
     cudaPackages.cudnn
     cudaPackages.cudatoolkit
     cudaPackages.cuda_cudart
-    cudaPackages.tensorrt
+    # cudaPackages.tensorrt
 
     # ML
     # python311Packages.tensorflow
-    python311Packages.tensorflowWithCuda
+    # python311Packages.tensorflowWithCuda
     # python311Packages.tensorrt
   ];
 
