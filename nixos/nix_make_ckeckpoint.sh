@@ -41,15 +41,15 @@ sudo -v;
     echo; echo "...Option selection...";
     {
         echo; if (fok "Do you wish to copy config on $path_config ?"); then
-            ok_config=true && echo ">>>>Copy config enabled!"
+            ok_config=true && echo "INFO - Copy config enabled!"
         else
-            ok_config=false && echo ">>>>Copy config disabled!"
+            ok_config=false && echo "INFO - Copy config disabled!"
         fi
     } && {
         echo; if (fok "Do you wish to copy shell on $path_shell"); then
-            ok_shell=true && echo ">>>>Copy shell enabled!"
+            ok_shell=true && echo "INFO - Copy shell enabled!"
         else
-            ok_shell=false && echo ">>>>Copy shell disabled!"
+            ok_shell=false && echo "INFO - Copy shell disabled!"
         fi
     }
 } && {
