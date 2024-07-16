@@ -6,11 +6,18 @@ let
     };
   };
 in
+
 pkgs.mkShell {
-  name = "TensorFlow-Shell";
-  venvDir = "./.venv";
-  
   buildInputs = with pkgs; [
-    python3Packages.tensorflow[and-cuda]
+    python311
+    python311Packages.jupyter
+    python311Packages.notebook
+    python311Packages.nbformat
+    python311Packages.pandas
+    python311Packages.plotly
+    python311Packages.scikit-learn
+    python311Packages.tabulate
+    python311Packages.matplotlib
+    python311Packages.tensorflow-bin
   ];
 }
