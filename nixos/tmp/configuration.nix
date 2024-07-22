@@ -65,6 +65,10 @@
   services.printing.enable = true;
 
   hardware.enableRedistributableFirmware = true;
+  
+  # QMK VIA Suport
+  hardware.keyboard.qmk.enable = true;
+  services.udev.packages = [ pkgs.via ];
 
   # Enable sound with pipewire.
   hardware.bluetooth = {
@@ -140,7 +144,6 @@
     btop
     cachix
     curl
-    discord
     docker
     ffmpeg
     jump
@@ -168,7 +171,9 @@
     sqlite
     tmux
     tree
+    via
     vscode
+    webcord
 
     # Python
     python311Full
@@ -265,11 +270,11 @@
   hardware.nvidia.prime = {
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";
-    # sync.enable = true;
-    offload = {
-      enable = true;
-      enableOffloadCmd = true;
-    };
+    sync.enable = true;
+    # offload = {
+    #   enable = true;
+    #   enableOffloadCmd = true;
+    # };
   };
 
   # ===== GARBAGE COLLECTOR
