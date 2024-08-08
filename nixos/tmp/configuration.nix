@@ -139,6 +139,7 @@
     glmark2
     gnome.dconf-editor
     gnome.gnome-tweaks
+    google-chrome
     htop
     insync
     jump
@@ -150,6 +151,7 @@
     neofetch
     nix-search-cli
     obsidian
+    opera
     remmina
     rustup
     speedtest-cli
@@ -227,7 +229,7 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
 
@@ -258,7 +260,7 @@
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
 
