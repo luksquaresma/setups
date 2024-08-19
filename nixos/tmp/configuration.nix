@@ -54,12 +54,16 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    layout = "br";
+    xkbVariant = "thinkpad";
   };
+
+  # Configure console keymap
+  console.keyMap = "br-abnt2";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
   hardware.enableRedistributableFirmware = true;
   
   # QMK VIA Suport
@@ -78,7 +82,16 @@
     package = pkgs.pulseaudioFull;
   };
 
-  # Enable sound with pipewire.
+  # hardware.pulseaudio.configFile = pkgs.writeText "default.pa" ''
+    # load-module module-bluetooth-policy
+    # load-module module-bluetooth-discover
+    # ## module fails to load with 
+    # ##   module-bluez5-device.c: Failed to get device path from module arguments
+    # ##   module.c: Failed to load module "module-bluez5-device" (argument: ""): initialization failed.
+    # # load-module module-bluez5-device
+    # # load-module module-bluez5-discover
+  # '';
+
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -124,6 +137,7 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.cudaSupport = true;
 
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -139,7 +153,6 @@
     glmark2
     gnome.dconf-editor
     gnome.gnome-tweaks
-    google-chrome
     htop
     insync
     jump
@@ -151,13 +164,12 @@
     neofetch
     nix-search-cli
     obsidian
-    opera
     remmina
     rustup
+    slack
     speedtest-cli
     spotify
     sqlite
-    teams-for-linux
     tmux
     tree
     via
@@ -168,7 +180,6 @@
     python311Full
     python311Packages.pip
     python311Packages.wheel
-    python311Packages.notebook
     python311Packages.numpy
     python311Packages.setuptools
     python311Packages.jupyter
@@ -182,13 +193,8 @@
     # ML
     # python311Packages.tensorflow
     # python311Packages.tensorflowWithCuda
-    # python311Packages.tensorrt 
+    # python311Packages.tensorrt
   ];
-
-  services.ollama = {
-    enable = true;
-    acceleration = "cuda";
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -206,7 +212,7 @@
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
-  #  Or disable the firewall altogether.
+  # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
@@ -216,7 +222,6 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
 
   # ===== NVIDIA CONFIGS
   # Enable OpenGL
@@ -229,7 +234,7 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = {
 
@@ -260,9 +265,18 @@
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  hardware.nvidia.prime = {
+    intelBusId = "PCI:0:2:0";
+    nvidiaBusId = "PCI:1:0:0";
+    sync.enable = true;
+    # offload = {
+    #   enable = true;
+    #   enableOffloadCmd = true;
+    # };
+  };
 
   # ===== GARBAGE COLLECTOR
   nix = {
