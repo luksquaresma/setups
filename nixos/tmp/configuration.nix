@@ -287,4 +287,9 @@
       options = "--delete-older-than 60d";
     };
   };
+
+  # ===== RETRIVAL OF config.nix ON ROLLBACK BUILDS
+  # Retrived files are save in:
+  #   /run/current-system/configuration.nix
+  system.copySystemConfiguration = true;
 }
