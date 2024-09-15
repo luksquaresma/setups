@@ -31,6 +31,7 @@ sudo -v && cd $SCRIPTPATH
     fi
 } && {
     echo; echo "...Nix channel update..."
+    sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos-unstable
     sudo nix-channel --update && echo
 } && {
     echo; echo "...Nix config edit..."

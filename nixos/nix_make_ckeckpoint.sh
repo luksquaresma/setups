@@ -116,7 +116,7 @@ sudo -v;
         } && {
             sudo -u $commit_usr git commit -m "$commit_msg"
         } && {
-            sudo -u $commit_usr git pull && git push
+            sudo -u $commit_usr git push
         }
     else
         echo "ABORT - Last second!"; exit 1
