@@ -274,4 +274,9 @@ in {
   # Retrived files are save in:
   #   /run/current-system/configuration.nix
   system.copySystemConfiguration = true;
+
+  # ===== ECTRON FIX
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
 }
