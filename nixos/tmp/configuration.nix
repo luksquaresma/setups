@@ -158,6 +158,7 @@ in {
     neofetch
     nix-search-cli
     obsidian
+    unstable.ollama
     pavucontrol
     pciutils
     pulsemixer
