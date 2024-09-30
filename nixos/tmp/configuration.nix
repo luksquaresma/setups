@@ -186,6 +186,9 @@ in {
     python311Packages.numpy
     python311Packages.setuptools
     python311Packages.jupyter
+    python311Packages.pandas
+    python311Packages.polars
+    python311Packages.ipykernel
 
     # Nvidia
     cudaPackages.cudnn
