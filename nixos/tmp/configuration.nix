@@ -133,6 +133,7 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    unstable.aider-chat
     alacarte
     btop
     cachix
@@ -157,6 +158,7 @@ in {
     mc
     neofetch
     nix-search-cli
+    unstable.nvtopPackages.full
     obsidian
     unstable.oterm
     pavucontrol
@@ -168,6 +170,7 @@ in {
     speedtest-cli
     spotify
     sqlite
+    unstable.tldr
     tmux
     tree
     usbutils
