@@ -64,7 +64,7 @@ in {
 
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
-  
+
   # ===== BLUETOOTH CONFIFGS
   hardware.bluetooth = {
     enable = true; # enables support for Bluetooth
