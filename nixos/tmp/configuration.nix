@@ -213,6 +213,9 @@ in {
     python311Packages.numpy
     python311Packages.setuptools
     python311Packages.jupyter
+    python311Packages.pyspark
+    python311Packages.pyyaml
+    python311Packages.toml    
 
     # Nvidia
     cudaPackages.cudnn
