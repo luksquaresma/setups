@@ -9,9 +9,9 @@ in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-
+      
       # cache from cachix
-      # ./cachix.nix
+      ./cachix.nix
     ];
 
   # Bootloader.
@@ -55,9 +55,12 @@ in {
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+    layout = "br";
+    variant = "thinkpad";
   };
+
+  # Configure console keymap
+  console.keyMap = "br-abnt2";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -82,6 +85,30 @@ in {
   hardware.keyboard.qmk.enable = true;
   services.udev.packages = [ pkgs.via ];
 
+  # ==== TEMPORARY FIX FOR AUDIO BUGS ON KERNEL
+  # boot.extraModprobeConfig = "options snd-hda-intel model=auto";
+  # boot.kernelModules = ["snd_hda_intel"];
+  # boot.kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" ];  
+  # boot.blacklistedKernelModules = [
+  #   "snd_soc_avs"
+  # ];
+  # boot.kernelPatches = [
+  #   {
+  #     name = "fix-audio-1";
+  #     patch = builtins.fetchurl {
+  #       url = "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/patch/sound/soc/soc-topology.c?id=e0e7bc2cbee93778c4ad7d9a792d425ffb5af6f7";
+  #       sha256 = "sha256:1y5nv1vgk73aa9hkjjd94wyd4akf07jv2znhw8jw29rj25dbab0q";
+  #     };
+  #   }
+  #   {
+  #     name = "fix-audio-2";
+  #     patch = builtins.fetchurl {
+  #       url = "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/patch/sound/soc/soc-topology.c?id=0298f51652be47b79780833e0b63194e1231fa34";
+  #       sha256 = "sha256:14xb6nmsyxap899mg9ck65zlbkvhyi8xkq7h8bfrv4052vi414yb";
+  #     };
+  #   }
+  # ];
+
   # Enable sound with pipewire.
   hardware.pulseaudio = {
     enable = false;
@@ -94,13 +121,15 @@ in {
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
     
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-
+  boot.extraModprobeConfig = ''
+    options snd-intel-dspcfg dsp_driver=1
+  '';
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
@@ -129,12 +158,9 @@ in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.cudaSupport = true;
 
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    unstable.aider-chat
-    alacarte
     btop
     cachix
     curl
@@ -158,9 +184,7 @@ in {
     mc
     neofetch
     nix-search-cli
-    unstable.nvtopPackages.full
     obsidian
-    unstable.oterm
     pavucontrol
     pciutils
     pulsemixer
@@ -170,7 +194,7 @@ in {
     speedtest-cli
     spotify
     sqlite
-    unstable.tldr
+    tlrc
     tmux
     tree
     usbutils
@@ -186,9 +210,6 @@ in {
     python311Packages.numpy
     python311Packages.setuptools
     python311Packages.jupyter
-    python311Packages.pandas
-    python311Packages.polars
-    python311Packages.ipykernel
 
     # Nvidia
     cudaPackages.cudnn
@@ -201,22 +222,6 @@ in {
     # python311Packages.tensorflowWithCuda
     # python311Packages.tensorrt
   ];
-
-  # ===== OLLAMA
-  services.ollama = {
-    package = unstable.ollama; # Uncomment if you want to use the unstable channel, see https://fictionbecomesfact.com/nixos-unstable-channel
-    enable = true;
-    acceleration = "cuda"; # Or "rocm"
-    #environmentVariables = { # I haven't been able to get this to work myself yet, but I'm sharing it for the sake of completeness
-      # HOME = "/home/ollama";
-      # OLLAMA_MODELS = "/home/ollama/models";
-      # OLLAMA_HOST = "0.0.0.0:11434"; # Make Ollama accesible outside of localhost
-      # OLLAMA_ORIGINS = "http://localhost:8080,http://192.168.0.10:*"; # Allow access, otherwise Ollama returns 403 forbidden due to CORS
-    #};
-  };
-
-
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -283,11 +288,21 @@ in {
     open = false;
 
     # Enable the Nvidia settings menu,
-        # accessible via `nvidia-settings`.
+	# accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+  hardware.nvidia.prime = {
+    intelBusId = "PCI:0:2:0";
+    nvidiaBusId = "PCI:1:0:0";
+    sync.enable = true;
+    # offload = {
+    #   enable = true;
+    #   enableOffloadCmd = true;
+    # };
   };
 
   # ===== GARBAGE COLLECTOR
@@ -304,9 +319,4 @@ in {
   # Retrived files are save in:
   #   /run/current-system/configuration.nix
   system.copySystemConfiguration = true;
-
-  # ===== ECTRON FIX
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-  };
 }
