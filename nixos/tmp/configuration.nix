@@ -228,6 +228,32 @@ in {
     # python311Packages.tensorflowWithCuda
     # python311Packages.tensorrt
   ];
+  
+  programs.bash.promptInit = ''
+    # Provide a nice prompt if the terminal supports it.
+    function get_git_branch() {
+      git name-rev --name-only HEAD > /dev/null 2>&1
+      if [[ $? -eq 0 ]]; then
+        echo "($(git name-rev --name-only HEAD))";
+      else
+        echo "";
+      fi
+    };
+
+    if [ "$TERM" != "dumb" ] || [ -n "$INSIDE_EMACS" ]; then
+      PROMPT_COLOR="1;35m"
+      ((UID)) && PROMPT_COLOR="1;35m"
+      if [ -n "$INSIDE_EMACS" ]; then
+        # Emacs term mode doesn't support xterm title escape sequence (\e]0;)
+        PS1="\n\[\033[$PROMPT_COLOR\][\u@\h:\w]\\n\$(get_git_branch)\$\[\033[0m\] "
+      else
+        PS1="\n\[\033[$PROMPT_COLOR\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\\n\$(get_git_branch)\$\[\033[0m\] "
+      fi
+      if test "$TERM" = "xterm"; then
+        PS1="\[\033]2;\h:\u:\w\007\]$PS1"
+      fi
+    fi
+  '';
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
