@@ -189,6 +189,7 @@ in {
     nix-search-cli
     obsidian
     pavucontrol
+    parallel
     pciutils
     pulsemixer
     remmina
