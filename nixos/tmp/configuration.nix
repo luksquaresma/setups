@@ -134,7 +134,7 @@ in {
   # '';
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.luks = {
@@ -147,8 +147,8 @@ in {
   };
 
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "luks";
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "luks";
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
   systemd.services."getty@tty1".enable = false;
@@ -290,11 +290,11 @@ in {
     extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     driSupport = true;
     driSupport32Bit = true;
-    setLdLibraryPath = true;
+    # setLdLibraryPath = true;
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
 
@@ -327,15 +327,27 @@ in {
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-
-  hardware.nvidia.prime = {
-    intelBusId = "PCI:0:2:0";
-    nvidiaBusId = "PCI:1:0:0";
-    sync.enable = true;
+  
+  # hardware.nvidia.prime = {
+    # intelBusId = "PCI:0:2:0";
+    # amdgpuBusId = 
+    # nvidiaBusId = "PCI:1:0:0";
+    # sync.enable = true;
     # offload = {
     #   enable = true;
     #   enableOffloadCmd = true;
     # };
+  # };
+
+
+  hardware.nvidia.forceFullCompositionPipeline = true;
+  
+  # ===== STEAM
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
   # ===== GARBAGE COLLECTOR
@@ -349,7 +361,15 @@ in {
   };
 
   # ===== RETRIVAL OF config.nix ON ROLLBACK BUILDS
-  # Retrived files are save in:
-  #   /run/current-system/configuration.nix
+  # Retrived files are save in: /run/current-system/configuration.nix
   system.copySystemConfiguration = true;
+
+  # ===== ECTRON FIX
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    MUTTER_DEBUG_KMS_THREAD_TYPE="user";
+  };
+
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = ["amdgpu.sg_display=0"];
 }
