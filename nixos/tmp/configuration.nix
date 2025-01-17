@@ -9,9 +9,9 @@ in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      
+
       # cache from cachix
-      ./cachix.nix
+      #./cachix.nix
     ];
 
   # Bootloader.
@@ -26,7 +26,7 @@ in {
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager.enable = true; 
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
@@ -51,20 +51,16 @@ in {
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
+  services.xserver.desktopManager.gnome.enable = false; # ! hyprland
+  
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "br";
-    variant = "thinkpad";
+    layout = "us";
+    variant = "";
   };
-
-  # Configure console keymap
-  console.keyMap = "br-abnt2";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
 
@@ -85,36 +81,11 @@ in {
   hardware.keyboard.qmk.enable = true;
   services.udev.packages = [ pkgs.via ];
 
-  # ==== TEMPORARY FIX FOR AUDIO BUGS ON KERNEL
-  # boot.extraModprobeConfig = "options snd-hda-intel model=auto";
-  # boot.kernelModules = ["snd_hda_intel"];
-  # boot.kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" ];  
-  # boot.blacklistedKernelModules = [
-  #   "snd_soc_avs"
-  # ];
-  # boot.kernelPatches = [
-  #   {
-  #     name = "fix-audio-1";
-  #     patch = builtins.fetchurl {
-  #       url = "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/patch/sound/soc/soc-topology.c?id=e0e7bc2cbee93778c4ad7d9a792d425ffb5af6f7";
-  #       sha256 = "sha256:1y5nv1vgk73aa9hkjjd94wyd4akf07jv2znhw8jw29rj25dbab0q";
-  #     };
-  #   }
-  #   {
-  #     name = "fix-audio-2";
-  #     patch = builtins.fetchurl {
-  #       url = "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/patch/sound/soc/soc-topology.c?id=0298f51652be47b79780833e0b63194e1231fa34";
-  #       sha256 = "sha256:14xb6nmsyxap899mg9ck65zlbkvhyi8xkq7h8bfrv4052vi414yb";
-  #     };
-  #   }
-  # ];
-
   # ===== SOUND WITH PIPEWIRE
-  sound.enable = false;
   security.rtkit.enable = true;
   hardware.pulseaudio = {
     enable = false;
-    package = unstable.pulseaudioFull;
+    package = unstable.pulseaudio;
   };
   services.pipewire = {
     enable = true;
@@ -127,15 +98,10 @@ in {
       package = unstable.wireplumber;
     };    
   };
-  
-  # Fix for audio testing
-  # boot.extraModprobeConfig = ''
-  #   options snd-intel-dspcfg dsp_driver=1
-  # '';
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
-
+  
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.luks = {
     isNormalUser = true;
@@ -164,6 +130,8 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    unstable.aider-chat
+    alacarte
     btop
     cachix
     curl
@@ -174,8 +142,8 @@ in {
     git
     glow
     glmark2
-    gnome.dconf-editor
-    gnome.gnome-tweaks
+    dconf-editor
+    gnome-tweaks
     htop
     insync
     jump
@@ -187,7 +155,9 @@ in {
     mc
     neofetch
     nix-search-cli
+    unstable.nvtopPackages.full
     obsidian
+    unstable.oterm
     pavucontrol
     parallel
     pciutils
@@ -228,8 +198,43 @@ in {
     # python311Packages.tensorflow
     # python311Packages.tensorflowWithCuda
     # python311Packages.tensorrt
+
+    # Hyprland
+    hyprland
+    hyprshot
+    hyprlock
+    networkmanagerapplet
+    dunst
+    libnotify
+    lxappearance
+    nautilus
+    nwg-look
+    nwg-displays
+    unstable.waybar
+    unstable.udiskie
+    kitty
+    swww
+    rofi-wayland
+    rofi-power-menu
+    playerctl
+
+    # Recording
+    unstable.obs-studio
   ];
-  
+
+  # ===== OLLAMA
+  services.ollama = {
+    package = unstable.ollama; # Uncomment if you want to use the unstable channel, see https://fictionbecomesfact.com/nixos-unstable-channel
+    enable = true;
+    acceleration = "cuda"; # Or "rocm"
+    #environmentVariables = { # I haven't been able to get this to work myself yet, but I'm sharing it for the sake of completeness
+      # HOME = "/home/ollama";
+      # OLLAMA_MODELS = "/home/ollama/models";
+      # OLLAMA_HOST = "0.0.0.0:11434"; # Make Ollama accesible outside of localhost
+      # OLLAMA_ORIGINS = "http://localhost:8080,http://192.168.0.10:*"; # Allow access, otherwise Ollama returns 403 forbidden due to CORS
+    #};
+  };
+
   programs.bash.promptInit = ''
     # Provide a nice prompt if the terminal supports it.
     function get_git_branch() {
@@ -281,16 +286,14 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 
   # ===== NVIDIA CONFIGS
   # Enable OpenGL
-  hardware.opengl = {
-    enable = true;
+  hardware.graphics = {
+    enable = true;    
     extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-    driSupport = true;
-    driSupport32Bit = true;
-    # setLdLibraryPath = true;
+    enable32Bit = true;
   };
 
   # Load nvidia driver for Xorg and Wayland
@@ -321,7 +324,7 @@ in {
     open = false;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+        # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -366,10 +369,37 @@ in {
 
   # ===== ECTRON FIX
   environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
     MUTTER_DEBUG_KMS_THREAD_TYPE="user";
+    # WLR_NO_HARDWARE_CURSORS = "1"; # if no cursor is visible
+    NIXOS_OZONE_WL = "1";  
   };
 
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = ["amdgpu.sg_display=0"];
+
+
+  # ===== HYPRLAND
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  fonts.packages = with pkgs; [ nerdfonts ];
+  services.udisks2.enable = true;
+
+  # ===== AUTOUPDATE
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.allowReboot = true;
+
 }
+
+
+
+
+
+
+
+
+
+
