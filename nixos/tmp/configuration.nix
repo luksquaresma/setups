@@ -157,7 +157,7 @@ in {
     nix-search-cli
     unstable.nvtopPackages.full
     obsidian
-    unstable.oterm
+    oterm
     pavucontrol
     parallel
     pciutils
