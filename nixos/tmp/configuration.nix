@@ -224,7 +224,7 @@ in {
 
   # ===== OLLAMA
   services.ollama = {
-    package = unstable.ollama; # Uncomment if you want to use the unstable channel, see https://fictionbecomesfact.com/nixos-unstable-channel
+    package = unstable.ollama-cuda; # Uncomment if you want to use the unstable channel, see https://fictionbecomesfact.com/nixos-unstable-channel
     enable = true;
     acceleration = "cuda"; # Or "rocm"
     #environmentVariables = { # I haven't been able to get this to work myself yet, but I'm sharing it for the sake of completeness
