@@ -131,6 +131,7 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     unstable.aider-chat
+    unstable.alpaca
     alacarte
     btop
     cachix
@@ -147,6 +148,7 @@ in {
     htop
     insync
     jump
+    kdePackages.kdenlive
     lazygit
     libsecret
     linuxHeaders
@@ -154,6 +156,7 @@ in {
     lshw
     mc
     neofetch
+    nix-prefetch-github
     nix-search-cli
     unstable.nvtopPackages.full
     obsidian
