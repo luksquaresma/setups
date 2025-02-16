@@ -53,7 +53,7 @@ f_copy() {
             save_on="${save_on%/}"
             save_on="${save_on##*/}"
             sudo mkdir -m 777 -p $path_temp/$save_on;
-            sudo cp -r $1 $path_temp/$save_on;
+            sudo cp -r $1 $path_temp;
             echo "OK -  $save_on";
         fi
     fi
