@@ -65,17 +65,70 @@ in {
   hardware.enableAllFirmware = true;
 
   # ===== BLUETOOTH CONFIFGS
+  #powerManagement.powerUpCommands = ''
+  #  rfkill block bluetooth
+  #  rfkill unblock bluetooth
+  #'';
   hardware.bluetooth = {
     enable = true; # enables support for Bluetooth
     powerOnBoot = true; # powers up the default Bluetooth controller on boot
+    package = unstable.bluez;
+    input = {
+      General = {
+        ClassicBondedOnly = false;
+        IdleTimeout = 30;
+      };
+    };
     settings = {
       General = {
+        AlwaysPairable = true;
+        DiscoverableTimeout = 0;
         Enable = "Source,Sink,Media,Socket";
         Experimental = true;
+        FastConnectable = true;
+        JustWorksRepairing = "always";
+        KernelExperimental = true;
       };
     };
   };
   services.blueman.enable = true;
+  powerManagement.powerUpCommands = ''
+    set -e
+    set -u
+    PS4=" $ "
+    ID_VENDOR="0bda"
+    ID_PRODUCT="a729"
+
+    ___fix_bt_reset_paths() {
+      for p in "$@"; do
+        echo 0 > "$p"/authorized
+      	sleep 1
+        echo 1 > "$p"/authorized
+      done
+    }
+
+      __fix_bt_main() {
+	systemctl stop bluetooth; sleep 4;
+
+	local p
+	local found_vnd
+	local found_prd
+	declare -a paths
+
+	for p in /sys/bus/usb/devices/\*; do 
+          found_vnd="$(cat "$p/idVendor" 2>/dev/null)" || :
+          found_prd="$(cat "$p/idProduct" 2>/dev/null)" || :
+          if [[ "$found_vnd" == "$ID_VENDOR" && "$found_prd" == "$ID_PRODUCT" ]]; then
+            __fix_bt_paths+=("$p")
+          fi
+        done
+
+        __fix_bt_reset_paths "''${__fix_bt_paths[@]}"; sleep 1;
+        __fix_bt_reset_paths "''${__fix_bt_paths[@]}"; sleep 2;
+        systemctl restart bluetooth;
+      }
+      __fix_bt_main
+  '';
 
   # QMK VIA Suport
   hardware.keyboard.qmk.enable = true;
@@ -85,7 +138,8 @@ in {
   security.rtkit.enable = true;
   hardware.pulseaudio = {
     enable = false;
-    package = unstable.pulseaudio;
+    package = unstable.pulseaudioFull;
+    extraModules = [ unstable.pulseaudio-module-xrdp ];
   };
   services.pipewire = {
     enable = true;
@@ -137,6 +191,7 @@ in {
     cachix
     curl
     docker
+    discord-ptb
     ffmpeg
     jump
     gcc
@@ -148,7 +203,6 @@ in {
     htop
     insync
     jump
-    kdePackages.kdenlive
     lazygit
     libsecret
     linuxHeaders
@@ -176,9 +230,15 @@ in {
     tree
     usbutils
     via
+    vlc
     unstable.vscode
     webcord
-    xclip
+    wl-clipboard
+   
+    # bluetooth
+    bluez-alsa
+    bluez-experimental
+    bluez-tools
 
     # Python
     python311Full
@@ -203,6 +263,7 @@ in {
     # python311Packages.tensorrt
 
     # Hyprland
+    gnome-themes-extra
     hyprland
     hyprshot
     hyprlock
@@ -223,11 +284,15 @@ in {
 
     # Recording
     unstable.obs-studio
+    kdePackages.kdenlive
+    kdePackages.mlt
+    movit
+    rtaudio
   ];
 
   # ===== OLLAMA
   services.ollama = {
-    # package = ollama-cuda; # Uncomment if you want to use the unstable channel, see https://fictionbecomesfact.com/nixos-unstable-channel
+    package = unstable.ollama; # ollama-cuda; # Uncomment if you want to use the unstable channel, see https://fictionbecomesfact.com/nixos-unstable-channel
     enable = true;
     acceleration = "cuda"; # Or "rocm"
     #environmentVariables = { # I haven't been able to get this to work myself yet, but I'm sharing it for the sake of completeness
@@ -238,8 +303,29 @@ in {
     #};
   };
 
+
+
+  # ===== OPEN-WEBUI
+  services.open-webui = {
+    enable = true;
+    package = unstable.open-webui;
+    port = 12345;
+    openFirewall = true;
+    environment = {
+      ANONYMIZED_TELEMETRY = "False";
+      DO_NOT_TRACK = "True";
+      SCARF_NO_ANALYTICS = "True";
+      OLLAMA_API_BASE_URL = "http://127.0.0.1:11434";
+      WEBUI_URL = "http://127.0.0.1:12345";
+      # WEBUI_AUTH = "False";
+    };
+  };
+
   programs.bash.promptInit = ''
-    # Provide a nice prompt if the terminal supports it.
+    function luks_nix_config() {
+      bash setups/nixos/nix_config_rebuild_reboot.sh
+    };
+  
     function get_git_branch() {
       git name-rev --name-only HEAD > /dev/null 2>&1
       if [[ $? -eq 0 ]]; then
