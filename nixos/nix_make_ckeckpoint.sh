@@ -5,12 +5,20 @@ cd $SCRIPTPATH;
 
 source $SCRIPTPATH/../utils.sh
 
-path_config="/etc/nixos/configuration.nix"
+path_config=(
+    "/etc/nixos/"
+    "$HOME/.config/hypr/"
+    "$HOME/.config/kitty/"
+    "$HOME/.config/hypr/"
+    "$HOME/.config/nwg-bar/"
+    "$HOME/.config/nwg-displays/"
+    "$HOME/.config/rofi/"
+    "$HOME/.config/waybar/"
+    "$HOME/.config/nwg-look/"
+    "$HOME/.config/nwg-look/"
+)
 path_shell="$HOME/shell.nix"
 path_temp="./tmp/"
-ok_config=false
-ok_shell=false
-ok_git=false
 ok_custom_commit=false
 ok_commit=false
 ok_sync=false
@@ -34,63 +42,34 @@ f_custom_commit() {
 }
 
 
+f_copy() {
+    echo; if (fok "Do you wish to copy configs on directory $1 ?"); then
+        echo "Case for $1"
+        if [ ! -d $1 ]; then
+            echo "ERROR - Directory not found on: $1"
+            exit 1
+        else
+            save_on=$1
+            save_on="${save_on%/}"
+            save_on="${save_on##*/}"
+            sudo mkdir -m 777 -p $path_temp/$save_on;
+            sudo cp -r $1 $path_temp/$save_on;
+            echo "OK -  $save_on";
+        fi
+    fi
+}
+
 echo; echo "........NIXOS CHECKPOINT ON GITHUB........"
 sudo -v;
 
-{ 
-    echo; echo "...Option selection...";
-    {
-        echo; if (fok "Do you wish to copy config on $path_config ?"); then
-            ok_config=true && echo "INFO - Copy config enabled!"
-        else
-            ok_config=false && echo "INFO - Copy config disabled!"
-        fi
-    } && {
-        echo; if (fok "Do you wish to copy shell on $path_shell"); then
-            ok_shell=true && echo "INFO - Copy shell enabled!"
-        else
-            ok_shell=false && echo "INFO - Copy shell disabled!"
-        fi
-    }
-} && {
-    echo; echo; echo "...File finding...";
-    if ($ok_config || $ok_shell); then
-        echo;
-        {
-            if $ok_config; then
-                if [ ! -f $path_config ]; then
-                    echo "ERROR - Config file not found in: $path_config"
-                    exit 1
-                else
-                    echo "OK - Config file found in: $path_config"
-                fi
-            fi
-        } && {
-            if $ok_shell; then
-                if [ ! -f $path_shell ]; then
-                    echo "ERROR - Shell file not found in:  $path_shell"
-                    exit 1
-                else
-                    echo "OK - Shell file found in:  $path_shell"
-                fi
-            fi
-        }
-    else
-        echo "ABORT - No files to copy!"; exit 1
-    fi
-} && {
-    {
-        echo; echo; echo "...Temporary files..."
-        echo ">>>>File path $path_temp..."
-        sudo mkdir -m 777 -p ./tmp
-    } && {
-        if $ok_config; then
-            sudo cp $path_config $path_temp; echo "OK - config.nix";
-        fi
-        if $ok_shell; then
-            sudo cp $path_shell $path_temp; echo "OK - shell.nix";
-        fi
-    }
+{
+    echo; echo; echo "...Temporary files..."
+    echo ">>>>File path $path_temp..."
+    sudo mkdir -m 777 -p ./tmp
+    
+    for c in "${path_config[@]}"; do
+        f_copy $c
+    done
 } && {
     echo; echo; echo "...GIT parameters..."
     {
@@ -112,7 +91,7 @@ sudo -v;
 } && {
     if (fok "Do you really wish to proceed with git sync?"); then
         {
-            sudo -u $commit_usr git add tmp/\*.nix
+            sudo -u $commit_usr git add $path_temp
         } && {
             sudo -u $commit_usr git commit -m "$commit_msg"
         } && {
