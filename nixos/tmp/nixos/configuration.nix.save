@@ -190,8 +190,8 @@ in {
     btop
     cachix
     curl
-    discord-ptb
     docker-compose
+    discord-ptb
     ffmpeg
     jump
     gcc
@@ -293,12 +293,12 @@ in {
   # ===== DOCKER
   virtualisation.docker = {
     enable = true;
-    enableNvidia = true;
     package = unstable.docker;
+    enableNvidia = true;
     rootless = {
       enable = true;
+      enableNvidia = true;
       setSocketVariable = true;
-      package = unstable.docker;
     };
   };
 
@@ -316,19 +316,19 @@ in {
   };
 
 
+
   # ===== OPEN-WEBUI
   services.open-webui = {
     enable = true;
     package = unstable.open-webui;
-    host = "0.0.0.0";
     port = 12345;
     openFirewall = true;
     environment = {
       ANONYMIZED_TELEMETRY = "False";
       DO_NOT_TRACK = "True";
       SCARF_NO_ANALYTICS = "True";
-      OLLAMA_BASE_URL = "http://127.0.0.1:11434";
-      WEBUI_URL = "http://0.0.0.0/12345";
+      OLLAMA_API_BASE_URL = "http://127.0.0.1:11434";
+      WEBUI_URL = "http://127.0.0.1:12345";
       # WEBUI_AUTH = "False";
     };
   };
