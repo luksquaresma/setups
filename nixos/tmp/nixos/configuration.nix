@@ -267,6 +267,7 @@ in {
     hyprland
     hyprshot
     hyprlock
+    hypridle
     networkmanagerapplet
     dunst
     libnotify
