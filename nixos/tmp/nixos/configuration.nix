@@ -263,25 +263,25 @@ in {
     # python311Packages.tensorrt
 
     # Hyprland
-    gnome-themes-extra
-    hyprland
-    hyprshot
-    hyprlock
-    hypridle
-    networkmanagerapplet
-    dunst
-    libnotify
-    lxappearance
-    nautilus
-    nwg-look
-    nwg-displays
+    unstable.gnome-themes-extra
+    unstable.hyprland
+    unstable.hyprshot
+    unstable.hyprlock
+    unstable.hypridle
+    unstable.networkmanagerapplet
+    unstable.dunst
+    unstable.libnotify
+    unstable.lxappearance
+    unstable.nautilus
+    unstable.nwg-look
+    unstable.nwg-displays
     unstable.waybar
     unstable.udiskie
-    kitty
-    swww
-    rofi-wayland
-    rofi-power-menu
-    playerctl
+    unstable.kitty
+    unstable.swww
+    unstable.rofi-wayland
+    unstable.rofi-power-menu
+    unstable.playerctl
 
     # Recording
     unstable.obs-studio
@@ -331,6 +331,7 @@ in {
       OLLAMA_BASE_URL = "http://127.0.0.1:11434";
       WEBUI_URL = "http://0.0.0.0/12345";
       # WEBUI_AUTH = "False";
+      ENABLE_REALTIME_CHAT_SAVE = "True";
     };
   };
 
