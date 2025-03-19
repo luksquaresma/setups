@@ -484,7 +484,7 @@ in {
   # ===== HYPRLAND
   programs.hyprland = {
     enable = true;
-    xwayland.enable = false;
+    xwayland.enable = true;
     #package = unstable.hyprland;
     portalPackage = pkgs.xdg-desktop-portal-hyprland;
   };
