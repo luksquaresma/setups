@@ -1,4 +1,12 @@
 
 //@theme "/nix/store/xcfia1n9h67jj4wks2kicw6xm1alj0q0-rofi-1.7.5+wayland3/share/rofi/themes/Arc-Dark.rasi"
 
-@theme "/nix/store/xcfia1n9h67jj4wks2kicw6xm1alj0q0-rofi-1.7.5+wayland3/share/rofi/themes/Monokai.rasi"
+//@theme "/nix/store/xcfia1n9h67jj4wks2kicw6xm1alj0q0-rofi-1.7.5+wayland3/share/rofi/themes/Monokai.rasi"
+
+//@theme "/nix/store/33gfx4c3z6yrcc4s2v04n2bid0lpiyff-rofi-1.7.8+wayland1/share/rofi/themes/Monokai.rasi"
+
+//@theme "/nix/store/33gfx4c3z6yrcc4s2v04n2bid0lpiyff-rofi-1.7.8+wayland1/share/rofi/themes/Arc-Dark.rasi"
+
+//@theme "/nix/store/33gfx4c3z6yrcc4s2v04n2bid0lpiyff-rofi-1.7.8+wayland1/share/rofi/themes/material.rasi"
+
+@theme "/nix/store/33gfx4c3z6yrcc4s2v04n2bid0lpiyff-rofi-1.7.8+wayland1/share/rofi/themes/Arc-Dark.rasi"

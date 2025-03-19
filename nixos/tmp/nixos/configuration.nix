@@ -331,7 +331,7 @@ in {
       OLLAMA_BASE_URL = "http://127.0.0.1:11434";
       WEBUI_URL = "http://0.0.0.0/12345";
       # WEBUI_AUTH = "False";
-      ENABLE_REALTIME_CHAT_SAVE = "True";
+      ENABLE_REALTIME_CHAT_SAVE = "False";
     };
   };
 
