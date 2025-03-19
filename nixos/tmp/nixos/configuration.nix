@@ -143,6 +143,7 @@ in {
   };
   services.pipewire = {
     enable = true;
+    package = unstable.pipewire;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
@@ -263,8 +264,7 @@ in {
     # python311Packages.tensorrt
 
     # Hyprland
-    unstable.gnome-themes-extra
-    unstable.hyprland
+    gnome-themes-extra
     unstable.hyprshot
     unstable.hyprlock
     unstable.hypridle
@@ -484,10 +484,19 @@ in {
   # ===== HYPRLAND
   programs.hyprland = {
     enable = true;
-    xwayland.enable = true;
+    xwayland.enable = false;
+    #package = unstable.hyprland;
+    portalPackage = pkgs.xdg-desktop-portal-hyprland;
   };
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  services.hypridle.enable = true;
+  xdg.portal = {
+    enable = true;
+    #xdgOpenUsePortal = true;
+    extraPortals = [
+      # pkgs.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
   fonts.packages = with pkgs; [ nerdfonts ];
   services.udisks2.enable = true;
 
@@ -496,13 +505,3 @@ in {
   system.autoUpgrade.allowReboot = true;
 
 }
-
-
-
-
-
-
-
-
-
-
