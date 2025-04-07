@@ -223,6 +223,7 @@ in {
     remmina
     rustup
     slack
+    unstable.solaar
     speedtest-cli
     spotify
     sqlite
