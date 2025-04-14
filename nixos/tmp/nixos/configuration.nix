@@ -502,8 +502,8 @@ in {
   fonts.packages = with pkgs; [ nerdfonts ];
   services.udisks2.enable = true;
 
-  # ===== AUTOUPDATE
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
+  # # ===== AUTOUPDATE
+  # system.autoUpgrade.enable = true;
+  # system.autoUpgrade.allowReboot = true;
 
 }
