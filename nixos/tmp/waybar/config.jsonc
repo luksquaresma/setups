@@ -8,6 +8,7 @@
     // Choose the order of the modules
     "modules-left": [
         "custom/rofi",
+        "custom/mouse-dpi-solar",
         "hyprland/window",
         //"hyprland/mode",
         //"hyprland/scratchpad",
@@ -20,7 +21,7 @@
         // "idle_inhibitor",
         "pulseaudio",
         "network",
-        //"power-profiles-daemon",
+        "power-profiles-daemon",
         //"backlight",
         //"keyboard-state",
         // "hyprland/language",
@@ -153,7 +154,11 @@
     "custom/pp": {
         "format": "  ⏻  ",
         "on-click": "rofi -show menu -modi 'menu:rofi-power-menu'"
-    }
+    },
+    "custom/mouse-dpi-solar": {
+        "format": "  󰍽  ",
+        "on-click": "solaar config Vertical dpi 4000"
+    },
     //"custom/media": {
     //    "format": "{icon} {text}",
     //    "return-type": "json",

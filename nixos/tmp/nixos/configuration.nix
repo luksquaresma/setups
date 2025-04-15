@@ -500,7 +500,8 @@ in {
     ];
   };
   fonts.packages = with pkgs; [ nerdfonts ];
-  services.udisks2.enable = true;
+  services.udisks2.enable = true;  
+  services.power-profiles-daemon.enable = true;
 
   # # ===== AUTOUPDATE
   # system.autoUpgrade.enable = true;
