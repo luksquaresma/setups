@@ -156,7 +156,10 @@ in {
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
-  services.libinput.mouse.accelSpeed = "0.4";
+  services.libinput.mouse = {
+    accelProfile = "adaptive";
+    accelSpeed = "1";
+  };
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.luks = {
