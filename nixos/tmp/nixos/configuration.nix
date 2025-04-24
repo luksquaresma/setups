@@ -490,13 +490,14 @@ in {
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    #package = unstable.hyprland;
+    package = pkgs.hyprland;
     portalPackage = pkgs.xdg-desktop-portal-hyprland;
   };
   services.hypridle.enable = true;
   xdg.portal = {
     enable = true;
-    #xdgOpenUsePortal = true;
+    xdgOpenUsePortal = true;
+    # wlr.enable = false;
     extraPortals = [
       # pkgs.xdg-desktop-portal-hyprland
       pkgs.xdg-desktop-portal-gtk
