@@ -158,7 +158,8 @@ in {
   services.libinput.enable = true;
   services.libinput.mouse = {
     accelProfile = "adaptive";
-    accelSpeed = "1";
+    accelSpeed = "1.0";
+    #accelStepMotion = "0.1";
   };
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
