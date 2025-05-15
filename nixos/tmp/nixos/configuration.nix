@@ -196,7 +196,7 @@ in {
     btop
     cachix
     curl
-    discord-ptb
+    unstable.discord
     docker-compose
     ffmpeg
     jump
