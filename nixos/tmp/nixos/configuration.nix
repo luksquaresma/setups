@@ -136,7 +136,7 @@ in {
 
   # ===== SOUND WITH PIPEWIRE
   security.rtkit.enable = true;
-  hardware.pulseaudio = {
+  services.pulseaudio = {
     enable = false;
     package = unstable.pulseaudioFull;
     extraModules = [ unstable.pulseaudio-module-xrdp ];
@@ -298,9 +298,10 @@ in {
   ];
 
   # ===== DOCKER
+  hardware.nvidia-container-toolkit.enable = true;
   virtualisation.docker = {
     enable = true;
-    enableNvidia = true;
+    #enableNvidia = true;
     package = unstable.docker;
     rootless = {
       enable = true;
@@ -504,7 +505,7 @@ in {
       pkgs.xdg-desktop-portal-gtk
     ];
   };
-  fonts.packages = with pkgs; [ nerdfonts ];
+  fonts.packages = with pkgs; [ nerd-fonts.adwaita-mono ];
   services.udisks2.enable = true;  
   services.power-profiles-daemon.enable = true;
 
