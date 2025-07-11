@@ -11,7 +11,7 @@ in {
       ./hardware-configuration.nix
 
       # cache from cachix
-      #./cachix.nix
+      ./cachix.nix
     ];
 
   # Bootloader.
@@ -52,7 +52,7 @@ in {
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = false; # ! hyprland
-  
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -190,8 +190,6 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    unstable.aider-chat
-    unstable.alpaca
     alacarte
     btop
     cachix
@@ -259,9 +257,9 @@ in {
     python311Packages.toml    
 
     # Nvidia
-    cudaPackages.cudnn
-    cudaPackages.cudatoolkit
-    cudaPackages.cuda_cudart
+    #cudaPackages.cudnn
+    #cudaPackages.cudatoolkit
+    #cudaPackages.cuda_cudart
     # cudaPackages.tensorrt
 
     # ML
@@ -314,7 +312,7 @@ in {
   services.ollama = {
     package = unstable.ollama; # ollama-cuda; # Uncomment if you want to use the unstable channel, see https://fictionbecomesfact.com/nixos-unstable-channel
     enable = true;
-    acceleration = "cuda"; # Or "rocm"
+    # acceleration = "cuda"; # Or "rocm"
     #environmentVariables = { # I haven't been able to get this to work myself yet, but I'm sharing it for the sake of completeness
       # HOME = "/home/ollama";
       # OLLAMA_MODELS = "/home/ollama/models";
@@ -325,22 +323,22 @@ in {
 
 
   # ===== OPEN-WEBUI
-  services.open-webui = {
-    enable = true;
-    package = unstable.open-webui;
-    host = "0.0.0.0";
-    port = 12345;
-    openFirewall = true;
-    environment = {
-      ANONYMIZED_TELEMETRY = "False";
-      DO_NOT_TRACK = "True";
-      SCARF_NO_ANALYTICS = "True";
-      OLLAMA_BASE_URL = "http://127.0.0.1:11434";
-      WEBUI_URL = "http://0.0.0.0/12345";
-      # WEBUI_AUTH = "False";
-      ENABLE_REALTIME_CHAT_SAVE = "False";
-    };
-  };
+  #services.open-webui = {
+  #  enable = true;
+  #  package = unstable.open-webui;
+  #  host = "0.0.0.0";
+  #  port = 12345;
+  #  openFirewall = true;
+  #  environment = {
+  #    ANONYMIZED_TELEMETRY = "False";
+  #    DO_NOT_TRACK = "True";
+  #    SCARF_NO_ANALYTICS = "True";
+  #    OLLAMA_BASE_URL = "http://127.0.0.1:11434";
+  #    WEBUI_URL = "http://0.0.0.0/12345";
+  #    # WEBUI_AUTH = "False";
+  #    ENABLE_REALTIME_CHAT_SAVE = "False";
+  #  };
+  #};
 
   programs.bash.promptInit = ''
     function luks_nix_config() {
@@ -396,7 +394,7 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 
   # ===== NVIDIA CONFIGS
   # Enable OpenGL
